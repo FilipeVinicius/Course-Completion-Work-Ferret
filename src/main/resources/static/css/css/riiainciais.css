@@ -1,0 +1,117 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+    box-sizing: border-box;
+}
+
+:root{
+    --bg-color: #5244A3;
+    --bg-box-color: #e9e9e9;
+    --bg-color-button: #9584FA;
+    --bg-color-focus: #8b6af7;
+    --txt-color: #fff;
+    --bg-color-submit-button-hover: #7652da;
+    --bg-color-submit-button-active: #453180;
+}
+
+body {
+    background-color: var(--bg-color);
+}
+
+.box{
+    width: 77vh;
+    max-height: 48vh;
+    border: 3px solid #000;
+    background-color: var(--bg-box-color);
+    border-radius: 10px;
+    padding-top: 10px;
+    padding-left: 7vh;
+    padding-right: 7vh;
+   
+}
+
+#logo{
+    display: flex;
+    justify-content: center;
+    height: 16vh;
+    border-radius: 100px;
+    margin-top: 4vh;
+}
+
+#logo img{border-radius: 100px;}
+
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    justify-items: center;
+    height: 44vw;
+}
+
+h2{
+    text-align: center;
+}
+
+.cadastrobutton{
+    text-align: center;
+}
+
+input[type="submit"]{
+    background-color: var(--bg-color-button); 
+    text-align: center;
+    width: 100%;
+    color: white;
+    height: auto;
+    padding: 15px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+
+input[type="email"] {
+    width: 90%;
+    height: 2rem;
+    border: 2px solid #000;
+    border-radius: 6px;
+    text-indent: 3px;
+}
+
+hr{
+    height: 1px;
+    border: 1px solid;
+    color: var(--bg-color-button)
+}
+
+input[type="submit"]:hover{
+    background-color: var(--bg-color-submit-button-hover);
+    transition: 0.3s;
+}
+
+input[type="submit"]:active{
+    background-color: var(--bg-color-submit-button-active);
+    transition: 0.3s;
+}
+
+input[type="email"]:focus{
+    border: 2px solid var(--bg-color-focus);
+    outline: none;
+    transition: 0.2s;
+}
+
+@media only screen and (min-width: 1000px) {
+    .box{
+        height: auto;
+        padding-bottom: 5vh;
+    }
+
+}
+
+    @media only screen and (min-width: 1200px) {
+        .box{
+            height: auto;
+            padding-bottom: 5vh;
+            margin-bottom: 7%;
+        }    
+}

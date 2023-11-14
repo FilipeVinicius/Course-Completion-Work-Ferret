@@ -1,0 +1,131 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+}
+
+
+:root{
+    --bg-color-box1: #5244A3; 
+    --bg-color-box2: #E9E9E9;
+    --bg-color-body: #2f1e65;
+    --bg-color-submit: #9584FA;
+    --bg-color-submit-hover: #8f66ff;
+    --bg-color-submit-active: #6245b8;
+    --txt-color: #fff;
+    --txt-color-a: #6c4dcf;
+}
+
+body{
+    background-color: var(--bg-color-body);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.grupo{
+    margin: auto;
+    margin-top: 10%;
+    height: 100%;
+    display: flex;
+    
+}
+
+.fazerLogin{
+    position: relative;
+    flex: 1;
+    float: left;
+    border-width:2px;
+    width: 140px;
+    left:0px;
+    background-color: var(--bg-color-box1);
+    padding: 40px 40px 15vh 40px;
+    color: var(--txt-color);
+    text-align: center;
+    border-radius: 10px 0 0 10px;
+}
+
+.fazerCadastro{
+    position:relative;
+    flex: 3;
+    display: inline-block;
+    border-width:2px;
+    width:26rem;
+    background-color: var(--bg-color-box2);
+    padding: 40px 40px 8vh 40px;
+    text-align: center;
+    border-radius: 0 10px 10px 0;
+}
+
+.fundo{
+    margin-top: 8vh;
+}
+
+#transparente{
+    color: gray;
+    font-size: small;
+}
+
+h2{font-size: 26px}
+
+a{
+    border: 1px solid var(--bg-color-submit);
+    color: var(--txt-color);
+    font-size: 20px;
+    padding: 14px 30px;
+    border-radius: 25px;
+    text-decoration: none;
+    background-color: var(--bg-color-submit);
+    box-shadow: 1px 1px 10px black;
+}
+
+
+
+
+input[type="text"], input[type="email"], input[type="password"]{
+    width: 87%;
+    height: 5.5vh;
+    background-color: rgba(196, 196, 196, 0.582);
+    text-indent: 8px;
+    border: none;
+}
+
+input[type="submit"]{
+    border: 1px solid var(--bg-color-submit);
+    color: var(--txt-color);
+    font-size: 18px;
+    padding: 9px 30px;
+    border-radius: 25px;
+    text-decoration: none;
+    background-color: var(--bg-color-submit);
+    box-shadow: 1px 1px 10px black;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+a:hover{
+    background-color: var(--bg-color-submit-hover);
+    transition: 0.7s;
+}
+
+a:active{
+    background-color: var(--bg-color-submit-active);
+    transition: 0.5s;
+}
+
+input[type="submit"]:hover{
+    background-color: var(--bg-color-submit-hover);
+    transition: 0.7s;
+}
+
+input[type="submit"]:active{
+    background-color: var(--bg-color-submit-active);
+    transition: 0.5s;
+}
+
+input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus{
+    border: 1px solid black;
+    border-radius: 2px;
+    transition: 0.8s;
+}

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="pt-br" xlmns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+	<link rel="stylesheet" href="/css/CriarProjeto_style.css" type="text/css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500&display=swap" rel="stylesheet">
+	<link rel="shortcut icon" href="/images/Furão da Neve.jpg" type="image/x-icon">
+	<title>Ferret</title>
+
+</head>
+
+
+<body>
+	<div th:if="${session.usuarioLogado}">
+
+		<input type="checkbox" name="check" id="check" checked>
+		<label for="check" id="check"><i class="fa-solid fa-bars"></i></label>
+		<div class="sidebar">
+
+			<center>
+				<a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">
+					<img src="/images/Furão da Neve.jpg" class="image" alt="Logo do Ferret">
+				</a>
+				<h2><span id="username" th:text="${session.usuarioLogado.nome_usuario}"></span></h2>
+			</center>
+
+			<a class="itens" th:href="@{TelaPrincipal}"><i class="fa-solid fa-house"></i><span
+					class="span1">Início</span></a>
+			<div class="actived"><a class="itens" th:href="@{CriarProjeto}"><i
+						class="fa-solid fa-circle-plus"></i><span>Criar projeto</span></a></div>
+
+			<a class="itens" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal"><i
+					class="fa-solid fa-user"></i><span> Perfil</span></a>
+			<a class="itens" th:href="@{ListaProjeto}"><i class="fa-solid fa-rectangle-list"></i><span>Lista de
+					projeto</span></a>
+			<a class="itens" th:href="@{SobreNos}"><i class="fa-solid fa-user-group"></i><span>Sobre nós</span></a>
+			<form method="post" action="/ferret/logout">
+				<button type="submit" class="itens" id="exit"><i
+						class="fa-solid fa-door-open"></i><span>Sair</span></button>
+			</form>
+		</div>
+
+		<main>
+			<form th:object="${projeto}" th:action="@{/ferret/salvarProj}" action="#" method="post"
+				enctype="multipart/form-data">
+				<div class="container ms-xl-5">
+					<div class="box mt-5 p-xl-5  ms-5 w-100 m-auto">
+						<h2 class="titulo text-center">Criar Projeto</h2>
+						<hr><br>
+						<div class="mb-4">
+							<label for="formGroupExampleInput" class="form-label">
+								<strong>Nome do projeto</strong>
+							</label>
+							<input type="text" class="form-control" id="formGroupExampleInput"
+								placeholder="Nome do Projeto" th:field="*{titulo}" maxlength="40" required>
+						</div>
+
+						<div class="mb-4">
+							<label for="exampleFormControlTextarea1" class="form-label">
+								<strong>Descrição</strong>
+							</label>
+							<textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+								placeholder="Descreva seu Projeto" th:field="*{descricao}" maxlength="1000"  required></textarea>
+						</div>
+
+						<div class="mb-4">
+							<label for="form-select"><strong>Quantidade de membros</strong></label>
+							<select class="form-select" aria-label="Default select example" th:field="*{quant_membros}">
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option value="5">5</option>
+								<option value="6">6</option>
+								<option value="7">7</option>
+								<option value="8">8</option>
+								<option value="9">9</option>
+								<option value="10">10</option>
+								<option value="11">11</option>
+								<option value="12">12</option>
+							</select>
+						</div>
+
+						<div class="mb-4">
+							<label for="exampleFormControlInput1" class="form-label">
+								<strong>Data de início</strong></label>
+							<input type="date" class="form-control" id="exampleFormControlInput1"
+								th:field="*{data_inicio}" min="1900-01-01" max="2079-06-06" required>
+						</div>
+
+						<!--                <div class="mb-4">-->
+						<!--                   <label for="form-select"><strong>Duração do projeto</strong></label>-->
+						<!--                    <select class="form-select" aria-label="Default select example" th:field="*{data_fim}">-->
+						<!--                        <option value="3" selected>1 - 3 meses</option>-->
+						<!--                        <option value="6">4 - 6 meses</option>-->
+						<!--                        <option value="9">7 - 9 meses</option>-->
+						<!--                        <option value="11">10 - 11 meses</option>-->
+						<!--                        <option value="12">1 ano</option>-->
+						<!--                        <option value="24">2 anos</option>-->
+						<!--                        <option value="36">3 anos</option>-->
+						<!--                        <option value="48">4 anos</option>-->
+						<!--                        <option value="60">5 anos ou mais</option>-->
+						<!--                    </select>-->
+						<!--                 </div>-->
+
+						<!--  
+                  <div class="mb-5">
+                    <label for="formFile" class="form-label">Adicionar foto do projeto</label>
+                    <input class="form-control" type="file" id="formFile" th:field="*{foto_projeto}">
+                  </div>
+-->
+
+						<div class="mb-5">
+							<div class="form-group col-md-12">
+								<label for="uploadImage" class="form-label">Adicionar foto do projeto:</label>
+								<input class="form-control" type="file" onchange="preViewImg();" name="file"
+									accept="image/*" id="uploadImage">
+							</div>
+							<div class="alert alert-danger my-3 rounded-0 border-0 custom-error-message" role="alert" th:if="${msg1}">
+				<strong th:text="${msg1}"></strong>
+			</div>
+						<div class="alert alert-danger my-3 rounded-0 border-0 custom-error-message" role="alert" th:if="${msg2}">
+				<strong th:text="${msg2}"></strong>
+			</div>
+							<div class="form-group col-md-12">
+								<label for="preView" class="form-label">Foto Escolhida:</label>
+								<img id="preView" alt="..."
+									th:src="*{foto_projeto} ? @{${'ferret/showImage/'+ produto.id}} : ${noImage}"
+									class="rounded d-block  mx-auto img-fluid" />
+							</div>
+						</div>
+
+
+						<button type="submit" class="submit btn btn-primary d-grid gap-2 col-8 mx-auto p-3">
+							Criar Projeto
+						</button>
+
+
+					</div>
+				</div>
+			</form>
+
+				<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+				aria-hidden="true">
+				<div class="modal-dialog ">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h1 class="modal-title fs-5 text-start" id="exampleModalLabel">Perfil</h1>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+
+			<form th:object="${usuario}" method="post">
+						<div class="modal-body ">
+							<img src="/images/Furão da Neve.jpg" alt="foto de perfil"
+								style="height: 13vh; border-radius: 100vh;"
+								class="img-fluid justify-content-center"><br>
+							<div class="mb-3">
+								<div class="input-group mb-3">
+									<label for="altNomeUsuario">Nome de usuário<br><input
+											class="altNomeUsuario form-control w-100 h-50" type="text"
+											placeholder="Nome de usuário" th:value="${session.usuarioLogado.nome_usuario}" readonly> </label><br><br><br>
+									<label for="altEmail">Email <br> <input type="email" class="altEmail form-control"
+											id="floatingInput" placeholder="nome@exemplo.com" th:value="${session.usuarioLogado.email}" readonly></label><br><br><br>
+									<!--<label for="altSenha">Senha <br> <input type="password" class="form-control"
+											id="floatingPassword" placeholder="Senha" th:value="${session.usuarioLogado.senha}" readonly></label><br><br><br>-->
+									<label for="altTelefone">Telefone <br> <input type="tel"
+											class="altTelefone form-control" id="floatingTel" placeholder="Telefone"
+											pattern="[0-9]{10,11}" th:value="${session.usuarioLogado.telefone}" readonly></label><br><br><br></label>
+								</div>
+
+
+								<!--<label for="formFileSm" class="form-label">Atualizar foto de perfil</label>
+								<input class="form-control form-control-sm w-auto" id="formFileSm" type="file"><br>-->
+							</div>
+
+							<!--<div class="modal-footer">
+								<button type="button" class="btn btn-primary">Editar Perfil</button>
+								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Salvar
+									configurações</button>
+
+							</div>-->
+							</form>
+						</div>
+					</div>
+				</div>
+		</main>
+	</div>
+	</div>
+
+
+	<div th:unless="${session.usuarioLogado}">
+		<h1 style="text-align:center; color:#fff;">Acesso Restrito!</h1><br>
+
+		<h2 style="text-align:center; color:#fff;">Venha se conectar conosco!</h2><br>
+		<!--Aqui ficará a imagem-->
+
+		<div class="d-flex justify-content-center">
+			<a th:href=" @{/ferret/TelaInicial}"><input class="btn btn-secondary" type="button"
+					value="Ir para a Tela Inicial"></a>
+		</div>
+
+
+	</div>
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+		crossorigin="anonymous"></script>
+	<script src="/js/BarraNav_script.js" async></script>
+	<script type="text/javascript" src="/js/scripts.js"></script>
+</body>
+
+</html>
