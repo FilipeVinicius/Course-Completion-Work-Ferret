@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-br" xlmns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script>function onSubmit() {
+			var form = new FormData(document.getElementById('formulario'));
+			const url = `https://localhost:8080/ferret/TelaInicial`;
+			fetch(form.action, {
+				method: "POST",
+				body: form,
+				headers: {'Content-Type': 'application/json'}
+			})
+				.then(
+					resposta => {
+						console.log(resposta.json())
+						return resposta.json();
+					}
+				).catch(error => console.log(error));
+		}
+	</script>
+	<link rel="stylesheet" href="/css/TelaInicial_style.css" type="text/css">
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500&display=swap" rel="stylesheet">
+	<link rel="shortcut icon" href="/images/Furão da Neve.jpg" type="image/x-icon">
+	<title>Ferret - entre ou cadastre-se</title>
+</head>
+
+<body>
+	<div class="grupo">
+		<div class="fazerLogin">
+			<h2>Bem-vindo de volta</h2><br><br><br><br><br><br>
+			<div class="fundo">
+				<p id="transparente">Mantenha-se conectado conosco</p><br>
+				<a th:href="@{Login}">LOGIN</a>
+			</div>
+		</div>
+
+		<div class="fazerCadastro">
+			<h2>Novo por aqui?</h2>
+			<h2>Faça seu cadastro</h2><br>
+
+			<form id="formulario" th:object="${usuario}" action="salvarUsuario" method="post">
+				<div th:if="${msg}" class="alert alert-danger" role="alert">
+					<span th:text="${msg}"></span>
+				</div>
+				<input type="text" name="nome" id="nomeUsuario" placeholder="Nome de usuário"
+					th:field="*{nome_usuario}" pattern="[A-Za-z\s]+" maxlength="40" required><br><br>
+				<input type="email" name="email" id="txtEmail" placeholder="Email" th:field="*{email}" required><br><br>
+				<input type="password" name="senha" id="txtSenha" placeholder="Senha" th:field="*{senha}"
+					required maxlength="50"><br><br>
+				<input type="text" name="telefone" id="txtNumero" placeholder="Numero de telefone"
+					th:field="*{telefone}" pattern="[0-9]{10,}" maxlength="15" title="Informe um número de telefone válido (mínimo de 10 dígitos) exemplo: 11987654321" required><br><br>
+				<input type="submit" value="CADASTRE-SE"><br>
+			</form>
+		</div>
+
+	</div>
+
+
+</body>
+
+
+</html>

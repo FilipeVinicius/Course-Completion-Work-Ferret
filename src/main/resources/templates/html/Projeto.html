@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="pt-br" xlmns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+	<link rel="stylesheet" href="/css/Projeto_style.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500&display=swap" rel="stylesheet">
+	<link rel="shortcut icon" href="/images/Furão da Neve.jpg" type="image/x-icon">
+	<title>Ferret</title>
+</head>
+
+<body>
+	<div th:if="${session.usuarioLogado}">
+
+
+
+
+		<input type="checkbox" name="check" id="check" class="checks" checked>
+		<label for="check" id="check"><i class="fa-solid fa-bars"></i></label>
+		<div class="sidebar">
+
+			<center>
+				<a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">
+					<img src="/images/Furão da Neve.jpg" class="image" alt="Logo do Ferret">
+				</a>
+				<h2><span id="username" th:text="${session.usuarioLogado.nome_usuario}"></span></h2>
+			</center>
+
+			<a class="itens" th:href="@{/ferret/TelaPrincipal}"><i class="fa-solid fa-house"></i><span
+					class="span1">Início</span></a>
+			<a class="itens" th:href="@{/ferret/CriarProjeto}"><i class="fa-solid fa-circle-plus"></i><span>Criar
+					projeto</span></a>
+			<a class="itens" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal"><i
+					class="fa-solid fa-user"></i><span> Perfil</span></a>
+			<a class="itens" th:href="@{/ferret/ListaProjeto}"><i class="fa-solid fa-rectangle-list"></i><span>Lista de
+					projeto</span></a>
+			<a class="itens" th:href="@{/ferret/SobreNos}"><i class="fa-solid fa-user-group"></i><span>Sobre
+					nós</span></a>
+			<form method="post" action="/ferret/logout">
+				<button type="submit" class="itens" id="exit"><i
+						class="fa-solid fa-door-open"></i><span>Sair</span></button>
+			</form>
+		</div>
+
+
+		<main class="container" th:object="${projeto}">
+
+			<div class="alert alert-danger my-3 rounded-0 border-0 custom-error-message" role="alert" th:if="${msg1}">
+				<strong th:text="${msg1}"></strong>
+			</div>
+			<div class="alert alert-danger my-3 rounded-0 border-0 custom-error-message" role="alert" th:if="${msg2}">
+				<strong th:text="${msg2}"></strong>
+			</div>
+			<div class="alert alert-danger my-3 rounded-0 border-0 custom-error-message" role="alert" th:if="${msg3}">
+				<strong th:text="${msg3}"></strong>
+			</div>
+
+			<form class="imagem-projeto img-fluid mx-auto" height="2" width="15" th:object="${projeto}">
+
+
+				<img id="preView" alt="foto do projeto"
+					th:src="*{foto_projeto} ? @{${'/ferret/showImage/'+ projeto.id}} : ${noImage}"
+					class="rounded d-block  mx-auto img-fluid" />
+
+			</form>
+			<h4><span th:text="*{titulo}"></span></h4><br><br>
+
+
+			<div class="descricao w-75">
+				<p class="informacoes" id="desc" th:text="*{descricao}"></p>
+				<br />
+
+				<div class="informacoes2 text-center">
+					<p class="informacoes">
+
+						Data de início: <span th:text="*{data_inicio}"></span><br>
+					<p id="qndMembro" class="informacoes">Membros: <span th:text="*{quant_membros}"></span></p>
+				</div>
+			</div><br><br><br><br>
+
+			<div class="grupoBotoes col-2"><br><br>
+				<!--Adicionar o formulário bem aqui-->
+				<input class="btn btn-primary" id="input_button1" type="button" value="Membros"
+					data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+				<form th:object="${usuario}" th:action="@{/ferret/adicionarMembro}" action:"#" method="post"
+					enctype="multipart/form-data">
+
+
+					<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight"
+						aria-labelledby="offcanvasRightLabel">
+						<div class="offcanvas-header">
+							<h3 class="offcanvas-title" id="offcanvasRightLabel">Membros</h3>
+							<button type="button" class="btn-close" data-bs-dismiss="offcanvas"
+								aria-label="Close"></button>
+						</div>
+						<div class="offcanvas-body">
+							<div class="membros container-fluid">
+
+
+								<ul class="list-group">
+									<!--<li class="list-group-item ">
+                      <img src="/images/Furão da Neve.jpg" class="fotoPerfil img-fluid" alt="Foto de perfil" height="70" width="65">
+                      <span th:text="${session.usuarioLogado.nome_usuario}"></span>
+                  </li><br>
+                  -->
+									<div class="alert alert-danger my-3 rounded-0 border-0 custom-error-message"
+										role="alert" th:if="${msg1}">
+										<strong th:text="${msg1}"></strong>
+									</div>
+									<div class="alert alert-danger my-3 rounded-0 border-0 custom-error-message"
+										role="alert" th:if="${msg2}">
+										<strong th:text="${msg2}"></strong>
+									</div>
+									<!--Lista de usuários existentes-->
+									<li th:each="projetoUsuario : ${projeto.membros}" class="list-group-item mt-3">
+										<img th:src="@{/images/Furão da Neve.jpg}" class="fotoPerfil img-fluid"
+											alt="Foto de perfil" height="70" width="65">
+										<span th:text="${projetoUsuario.usuario.nome_usuario}"></span>
+									</li>
+									<br><br>
+								</ul>
+
+								<!--Aqui é onde irá adicionar os usuários-->
+								<button type="button" class="btn btn-secondary ms-0 p-2" data-bs-toggle="collapse"
+									data-bs-target="#collapseExample" aria-expanded="false"
+									aria-controls="collapseExample" id="button_adicionar_membro">Adicionar
+									membro</button>
+								<br><br>
+								<div class="collapse" id="collapseExample">
+									<div class="card card-body">
+										<label for="form-control">Adicionar um membro pelo email 🔍</label>
+
+										<input type="hidden" name="projetoId" th:value="${projeto.id}">
+
+										<input type="email" name="email" id="btnAdicionarMembro" class="form-control"
+											placeholder="Digite o email do usuário" aria-label="Username"
+											aria-describedby="basic-addon1" required><br>
+										<button type="submit" class="btn btn-secondary mx-auto">Adicionar</button>
+									</div>
+								</div>
+							</div>
+						</div>
+
+				</form>
+
+				<!--Adicionar o formulário bem aqui-->
+			</div>
+
+			<!--Botão de encerrar projeto-->
+			<a class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#encerrarProjetoModal"
+				id="input_button2" type="button">Encerrar projeto</a>
+
+			<!-- Modal do encerrar projeto -->
+			<div class="modal fade" id="encerrarProjetoModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+				aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h1 class="modal-title fs-5" id="exampleModalLabel">Aviso importante!</h1>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							<span>Você tem certeza de que deseja encerrar o projeto <span
+									th:text="${projeto.titulo}"></span>?</span>
+						</div>
+						<div class="modal-footer">
+							<button type="button" id="btnNao" class="btn btn-secondary ms-5 ps-4 pe-4 pt-2 pb-2"
+								data-bs-dismiss="modal">Não</button>
+							<a type="button" id="btnEncerrarProjeto" class="btn btn-danger ps-4 pe-4 pt-2 pb-2"
+								th:href="@{/ferret/encerrar/{id}(id=${projeto.id})}">Sim</a>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+	</div>
+
+	<!--Check list - Início-->
+	<div th:if="${session.usuarioLogado}">
+
+		<h3 class="text-center text-white pt-2" id="listaT">Lista de tarefas</h3>
+
+		<div class="boxCheckList">
+
+			<div class="box1">
+
+				<form th:object="${tarefa}" th:action="@{/ferret/addTarefa}" action="#" method="post">
+					<input type="hidden" name="projetoId" th:value="${projeto.id}">
+					<input type="text" id="novaTask" placeholder="Adicione uma nova tarefa" th:field="*{titulo}"
+						required name="titulo" maxlength="50">
+					<button class="btn btn-secondary" id="adicionarTarefa" onclick="addTask()">Adicionar</button>
+
+				</form>
+			</div>
+			<div>
+			</div><br>
+			<table class="table table-striped table-hover shadow">
+				<thead>
+					<tr class="text-center">
+						<th class="col">Nome da tarefa</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="tarefa : ${tarefas}" class="text-center">
+						<td th:text="${tarefa.titulo}"></td>
+						<td>
+							<a th:href="@{/ferret/excluir/{id}(id=${tarefa.id})}" class="btn btn-sm btn-danger">
+								Excluir
+							</a>
+
+						</td>
+					</tr>
+
+				</tbody>
+			</table>
+		</div>
+
+
+
+
+		<!--Check list - Fim-->
+
+		<div class="pt-5 mx-auto" id="encerrarProjeto">
+		</div>
+		</main>
+
+		<!--Modal do Perfil-->
+		<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog ">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h1 class="modal-title fs-5 text-start" id="exampleModalLabel">Perfil</h1>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+
+					<form th:object="${usuario}" method="post">
+						<div class="modal-body ">
+							<img src="/images/Furão da Neve.jpg" alt="foto de perfil"
+								style="height: 13vh; border-radius: 100vh;"
+								class="img-fluid justify-content-center"><br>
+							<div class="mb-1">
+								<div class="input-group mb-1">
+									<label for="altNomeUsuario">Nome de usuário</label>
+									<div class="altNomeUsuario form-control w-100 h-50" type="text"
+										placeholder="Nome de usuário" th:text="${session.usuarioLogado.nome_usuario}"
+										readonly disabled></div>
+								</div>
+								<br>
+
+								<div class="input-group mb-1">
+									<label for="altEmail">Email</label>
+									<div type="email" class="altEmail form-control w-100 h-50" id="floatingInput"
+										placeholder="nome@exemplo.com" th:text="${session.usuarioLogado.email}"
+										readonly></div>
+								</div>
+								<br>
+
+								<!-- Comentei a seção de senha, pois normalmente não é recomendado exibir senhas no frontend -->
+								<!--
+    <div class="input-group mb-3">
+        <label for="altSenha">Senha</label>
+        <input type="password" class="form-control" id="floatingPassword" placeholder="Senha" th:value="${session.usuarioLogado.senha}" readonly>
+    </div>
+    <br>
+    -->
+								<div class="input-group mb-1">
+									<label for="altTelefone">Telefone</label>
+									<div type="tel" class="altTelefone form-control w-100 h-50" id="floatingTel"
+										placeholder="Telefone" pattern="[0-9]{10,11}"
+										th:text="${session.usuarioLogado.telefone}" readonly></div>
+								</div>
+								<br>
+							</div>
+
+
+							<!--<label for="formFileSm" class="form-label">Atualizar foto de perfil</label>
+								<input class="form-control form-control-sm w-auto" id="formFileSm" type="file"><br>-->
+						</div>
+
+						<!--<div class="modal-footer">
+								<button type="button" class="btn btn-primary">Editar Perfil</button>
+								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Salvar
+									configurações</button>
+
+							</div>-->
+					</form>
+				</div>
+			</div>
+		</div>
+
+
+	</div>
+	</div>
+	<div th:unless="${session.usuarioLogado}">
+		<h1 style="text-align:center; color: #fff;  z-index: 100;">Acesso Restrito!</h1><br>
+
+		<h2 style="text-align:center; color: #fff;  z-index: 100;">Venha se conectar conosco!</h2><br>
+		<!--Aqui ficará a imagem-->
+
+		<div class="d-flex justify-content-center">
+			<a th:href=" @{/ferret/TelaInicial}"><input class="btn btn-secondary" type="button"
+					value="Ir para a Tela Inicial" style="margin: 0 auto"></a>
+		</div>
+	</div>
+
+
+
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+		crossorigin="anonymous"></script>
+	<script src="/js/Projeto_script.js" async></script>
+	<script src="/js/BarraNav_script.js" async></script>
+
+
+
+	<!--"
+-->
+</body>
+
+</html>

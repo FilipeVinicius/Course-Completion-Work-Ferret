@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="pt-br" xlmns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500&display=swap" rel="stylesheet">
+	<link rel="shortcut icon" href="/images/Furão da Neve.jpg" type="image/x-icon">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+	<link rel="stylesheet" href="/css/TelaPrincipal_style.css" type="text/css">
+
+	<title>Ferret</title>
+</head>
+
+<body>
+	<div th:if="${session.usuarioLogado}">
+		<input type="checkbox" name="check" id="check" checked>
+		<label for="check" id="check"><i class="fa-solid fa-bars"></i></label>
+		<div class="sidebar">
+
+			<center>
+				<a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">
+					<img src="/images/Furão da Neve.jpg" class="image" alt="Logo do Ferret">
+				</a>
+				<h2><span id="username" th:text="${session.usuarioLogado.nome_usuario}"></span></h2>
+			</center>
+
+			<div class="actived"><a class="itens" th:href="@{TelaPrincipal}"><i class="fa-solid fa-house"></i><span
+						class="span1">Início</span></a></div>
+			<a class="itens" th:href="@{CriarProjeto}"><i class="fa-solid fa-circle-plus"></i><span>Criar
+					projeto</span></a>
+
+			<a class="itens" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal"><i
+					class="fa-solid fa-user"></i><span> Perfil</span></a>
+			<a class="itens" th:href="@{ListaProjeto}"><i class="fa-solid fa-rectangle-list"></i><span>Lista de
+					projeto</span></a>
+			<a class="itens" th:href="@{SobreNos}"><i class="fa-solid fa-user-group"></i><span>Sobre nós</span></a>
+			<form method="post" action="/ferret/logout">
+				<button type="submit" class="itens" id="exit"><i
+						class="fa-solid fa-door-open"></i><span>Sair</span></button>
+			</form>
+		</div>
+
+
+
+
+		<div class="conteudo">
+			<div class="box1 w-100 m-lg-0">
+				<img src="/images/Furão da Neve.jpg" class="img-fluid h-auto" alt="Logo do Ferret"><br><br>
+				<h1 class="text-center"><strong>Seja bem-vindo(a), <span
+							th:text="${session.usuarioLogado.nome_usuario}"></span></strong></h1><br>
+				<h4 class="text-center"><strong>O que você deseja?</strong></h4><br>
+			</div>
+			<div class="box2">
+
+
+
+				<div class="buttonT">
+					<button class="ms-5 justify-content-center" onclick="window.location.href='CriarProjeto'"><i
+							class="fa-solid fa-plus" id="icon1"></i><br>
+						<p class="criar-projeto-p"><b><br>Criar <br> Projeto</p></b>
+					</button>
+					<button class="ms-5" onclick="window.location.href='ListaProjeto'"><i
+							class="fa-solid fa-rectangle-list" id="icon2"></i>
+						<p class="lista-projeto-p"><b> <br>Lista de <br> projeto</p></b>
+					</button>
+				</div>
+
+				<!-- Modal -->
+			<!--Modal do Perfil-->
+		<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog ">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h1 class="modal-title fs-5 text-start" id="exampleModalLabel">Perfil</h1>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+
+					<form th:object="${usuario}" method="post">
+						<div class="modal-body ">
+							<img src="/images/Furão da Neve.jpg" alt="foto de perfil"
+								style="height: 13vh; border-radius: 100vh;"
+								class="img-fluid justify-content-center"><br>
+							<div class="mb-1">
+								<div class="input-group mb-1">
+									<label for="altNomeUsuario">Nome de usuário</label>
+									<div class="altNomeUsuario form-control w-100 h-50" type="text"
+										placeholder="Nome de usuário" th:text="${session.usuarioLogado.nome_usuario}"
+										readonly disabled></div>
+								</div>
+								<br>
+
+								<div class="input-group mb-1">
+									<label for="altEmail">Email</label>
+									<div type="email" class="altEmail form-control w-100 h-50" id="floatingInput"
+										placeholder="nome@exemplo.com" th:text="${session.usuarioLogado.email}"
+										readonly></div>
+								</div>
+								<br>
+
+								<!-- Comentei a seção de senha, pois normalmente não é recomendado exibir senhas no frontend -->
+								<!--
+    <div class="input-group mb-3">
+        <label for="altSenha">Senha</label>
+        <input type="password" class="form-control" id="floatingPassword" placeholder="Senha" th:value="${session.usuarioLogado.senha}" readonly>
+    </div>
+    <br>
+    -->
+								<div class="input-group mb-1">
+									<label for="altTelefone">Telefone</label>
+									<div type="tel" class="altTelefone form-control w-100 h-50" id="floatingTel"
+										placeholder="Telefone" pattern="[0-9]{10,11}"
+										th:text="${session.usuarioLogado.telefone}" readonly></div>
+								</div>
+								<br>
+							</div>
+
+
+							<!--<label for="formFileSm" class="form-label">Atualizar foto de perfil</label>
+								<input class="form-control form-control-sm w-auto" id="formFileSm" type="file"><br>-->
+						</div>
+
+						<!--<div class="modal-footer">
+								<button type="button" class="btn btn-primary">Editar Perfil</button>
+								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Salvar
+									configurações</button>
+
+							</div>-->
+					</form>
+				</div>
+			</div>
+		</div>
+
+			</div>
+			
+
+
+
+			</div>
+		</div>
+	</div>
+
+
+	<div th:unless="${session.usuarioLogado}">
+		<h1 style="text-align:center;">Acesso Restrito!</h1><br>
+
+		<h2 style="text-align:center;">Venha se conectar conosco!</h2><br>
+		<!--Aqui ficará a imagem-->
+
+		<div class="d-flex justify-content-center">
+			<a th:href=" @{/ferret/TelaInicial}"><input class="btn btn-secondary" type="button"
+					value="Ir para a Tela Inicial" style="margin: 0 auto;"></a>
+		</div>
+
+
+	</div>
+
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+		crossorigin="anonymous"></script>
+	<script src="/js/BarraNav_script.js" async></script>
+
+</body>
+
+</html>
