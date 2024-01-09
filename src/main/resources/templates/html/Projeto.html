@@ -50,16 +50,9 @@
 
 		<main class="container" th:object="${projeto}">
 
-			<div class="alert alert-danger my-3 rounded-0 border-0 custom-error-message" role="alert" th:if="${msg1}">
-				<strong th:text="${msg1}"></strong>
-			</div>
-			<div class="alert alert-danger my-3 rounded-0 border-0 custom-error-message" role="alert" th:if="${msg2}">
-				<strong th:text="${msg2}"></strong>
-			</div>
-			<div class="alert alert-danger my-3 rounded-0 border-0 custom-error-message" role="alert" th:if="${msg3}">
-				<strong th:text="${msg3}"></strong>
-			</div>
-
+			
+			
+		
 			<form class="imagem-projeto img-fluid mx-auto" height="2" width="15" th:object="${projeto}">
 
 
@@ -95,9 +88,19 @@
 						aria-labelledby="offcanvasRightLabel">
 						<div class="offcanvas-header">
 							<h3 class="offcanvas-title" id="offcanvasRightLabel">Membros</h3>
+			
 							<button type="button" class="btn-close" data-bs-dismiss="offcanvas"
 								aria-label="Close"></button>
 						</div>
+						<div class="alert alert-danger my-3 rounded-0 border-0 custom-error-message" role="alert" th:if="${msg1}">
+				<strong th:text="${msg1}"></strong>
+			</div>
+			<div class="alert alert-danger my-3 rounded-0 border-0 custom-error-message" role="alert" th:if="${msg2}">
+				<strong th:text="${msg2}"></strong>
+			</div>
+										<div class="alert alert-danger my-3 rounded-0 border-0 custom-error-message" role="alert" th:if="${msg3}">
+    <strong th:text="${msg3}"></strong>
+</div>
 						<div class="offcanvas-body">
 							<div class="membros container-fluid">
 
@@ -108,14 +111,7 @@
                       <span th:text="${session.usuarioLogado.nome_usuario}"></span>
                   </li><br>
                   -->
-									<div class="alert alert-danger my-3 rounded-0 border-0 custom-error-message"
-										role="alert" th:if="${msg1}">
-										<strong th:text="${msg1}"></strong>
-									</div>
-									<div class="alert alert-danger my-3 rounded-0 border-0 custom-error-message"
-										role="alert" th:if="${msg2}">
-										<strong th:text="${msg2}"></strong>
-									</div>
+									
 									<!--Lista de usuários existentes-->
 									<li th:each="projetoUsuario : ${projeto.membros}" class="list-group-item mt-3">
 										<img th:src="@{/images/Furão da Neve.jpg}" class="fotoPerfil img-fluid"
@@ -317,6 +313,21 @@
 		crossorigin="anonymous"></script>
 	<script src="/js/Projeto_script.js" async></script>
 	<script src="/js/BarraNav_script.js" async></script>
+	<script>
+    // Remove a mensagem da URL sem recarregar a página
+    var urlWithoutMessage = window.location.href.replace(/[?&]msg3=[^&]+/, '');
+    window.history.replaceState({}, document.title, urlWithoutMessage);
+</script>
+<script>
+    // Remove a mensagem da URL sem recarregar a página
+    var urlWithoutMessage = window.location.href.replace(/[?&]msg2=[^&]+/, '');
+    window.history.replaceState({}, document.title, urlWithoutMessage);
+</script>
+<script>
+    // Remove a mensagem da URL sem recarregar a página
+    var urlWithoutMessage = window.location.href.replace(/[?&]msg1=[^&]+/, '');
+    window.history.replaceState({}, document.title, urlWithoutMessage);
+</script>
 
 
 
