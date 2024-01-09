@@ -130,7 +130,10 @@ public class PageController {
 	}
 
 	@GetMapping("/Projeto/{id}")
-	public ModelAndView Projeto(@PathVariable("id") long id) {
+	public ModelAndView Projeto(@PathVariable("id") long id, @RequestParam(required = false, name = "msg3") String msg3,
+			@RequestParam(required = false, name = "msg2") String msg2,
+			@RequestParam(required = false, name = "msg1") String msg1
+			) {
 		ModelAndView mv = new ModelAndView();
 
 		Projeto projeto = projetoService.findById(id);
@@ -141,6 +144,10 @@ public class PageController {
 
 		mv.addObject("tarefas", tarefas);
 		mv.addObject("projeto", projeto);
+	    mv.addObject("usuario", new Usuario());
+		mv.addObject("msg1", msg1);
+		mv.addObject("msg2", msg2);
+		mv.addObject("msg3", msg3);
 		mv.addObject("noImage", noImage);
 		mv.setViewName("html/Projeto");
 		return mv;
@@ -177,6 +184,8 @@ public class PageController {
 		mv.setViewName("html/SobreNos");
 		return mv;
 	}
+	
+	
 
 //	@PostMapping("/salvarProjeto")
 //	public ModelAndView salvarProjeto(@Validated @ModelAttribute("projeto") tcc.itb.FerretSystem.model.Projeto projeto, BindingResult result, HttpSession session) {
@@ -291,17 +300,17 @@ public class PageController {
 
 		if (projeto_.getMembros().size() >= numeroMaximoMembros) {
 			// O número máximo de membros foi atingido, então não adicione o novo membro
-			mv.addObject("msg1", "O número máximo de membros foi atingido. Não é possível adicionar mais membros.");
-			return "redirect:/ferret/Projeto/" + projetoId;
+		      return "redirect:/ferret/Projeto/" + projetoId + "?msg1=O numero maximo de membros foi atingido";
+
 		} else {
 
 			try {
 				// Consulte o banco de dados para obter o usuário com base no email
 				Usuario usuario = usuarioService.findByEmail(email);
 				
-				if(usuario == null) {
-					mv.addObject("msg3", "Usuário não encontrado");
-					return "redirect:/ferret/Projeto/" + projetoId;
+				if (usuario == null) {
+				      return "redirect:/ferret/Projeto/" + projetoId + "?msg3=Usuario nao encontrado";
+
 				}
 
 				if (usuario.getNivel_acesso().equals("Membro")) {
@@ -321,11 +330,8 @@ public class PageController {
 					return "redirect:/ferret/Projeto/" + projetoId; // Redireciona de volta ao formulário
 
 				} else {
-					mv.addObject("msg2", "Só é possível adicionar usuários cadastrados no App");
-					System.out.println("A mensagem apareceu");
+				      return "redirect:/ferret/Projeto/" + projetoId + "?msg2=Só é possível adicionar usuários cadastrados no App";
 
-					mv.setViewName("redirect:/ferret/Projeto/" + projetoId);
-					return "redirect:/ferret/Projeto/" + projetoId;
 				}
 			}
 
